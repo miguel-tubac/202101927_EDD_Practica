@@ -1,0 +1,24 @@
+[
+    {
+        "vuelo": "A100",
+        "numero_de_registro": "N12345",
+        "modelo": "Boeing 737",
+        "fabricante": "Boeing",
+        "ano_fabricacion": 2015,
+        "capacidad": 180,
+        "peso_max_despege": 79000,
+        "aerolinea": "AirlineX",
+        "estado": "Disponible"
+    },
+    {
+        "vuelo": "A102",
+        "numero_de_registro": "A54321",
+        "modelo": "Air Bus 737",
+        "fabricante": "Air Bus",
+        "ano_fabricacion": 2018,
+        "capacidad": 150,
+        "peso_max_despege": 77000,
+        "aerolinea": "AirlineY",
+        "estado": "Mantenimiento"
+    }
+]
