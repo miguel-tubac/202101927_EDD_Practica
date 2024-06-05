@@ -5,15 +5,15 @@ using namespace std;
 #include "importaciones/json.hpp"
 
 //Importaciones de las clases
-#include "clasesPropias/Aviones.hpp"
-#include "clasesPropias/CircularDoublyLinkedList.hpp"
+#include "clasesPropias/Aviones.h"
+#include "clasesPropias/ListaCircularDoble.h"
 
 // Para simplificar, usaremos un alias para el tipo de datos JSON
 using json = nlohmann::json;
 
 // Aca se crean las dos listas doblemente enlazadas:
-CircularDoublyLinkedList listaAvionesDisponibles;
-CircularDoublyLinkedList listaAvionesMantenimiento;
+ListaCircularDoble listaAvionesDisponibles;
+ListaCircularDoble listaAvionesMantenimiento;
 
 void cargarAviones() {
     cout << "Cargando aviones..." << endl;

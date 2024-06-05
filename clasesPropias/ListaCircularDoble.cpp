@@ -1,9 +1,9 @@
-#include "CircularDoublyLinkedList.hpp"
+#include "ListaCircularDoble.h"
 #include <iostream>
 
-CircularDoublyLinkedList::CircularDoublyLinkedList() : head(nullptr) {}
+ListaCircularDoble::ListaCircularDoble() : head(nullptr) {}
 
-CircularDoublyLinkedList::~CircularDoublyLinkedList() {
+ListaCircularDoble::~ListaCircularDoble() {
     if (head == nullptr) return;
     Nodo* current = head;
     do {
@@ -14,7 +14,7 @@ CircularDoublyLinkedList::~CircularDoublyLinkedList() {
     } while (current != head);
 }
 
-void CircularDoublyLinkedList::insert(Aviones* avion) {
+void ListaCircularDoble::insert(Aviones* avion) {
     Nodo* newNode = new Nodo(avion);
     if (head == nullptr) {
         head = newNode;
@@ -29,7 +29,7 @@ void CircularDoublyLinkedList::insert(Aviones* avion) {
     }
 }
 
-void CircularDoublyLinkedList::display() const {
+void ListaCircularDoble::display() const {
     if (head == nullptr) {
         std::cout << "La lista está vacía." << std::endl;
         return;

@@ -1,7 +1,7 @@
 #ifndef NODO_HPP
 #define NODO_HPP
 
-#include "Aviones.hpp"
+#include "Aviones.h"
 
 class Nodo {
 public:

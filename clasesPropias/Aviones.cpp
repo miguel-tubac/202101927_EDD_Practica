@@ -1,4 +1,4 @@
-#include "Aviones.hpp"
+#include "Aviones.h"
 
 Aviones::Aviones(std::string v, std::string nr, std::string m, std::string f, int af, int c, int pmd, std::string a, std::string e)
     : vuelo(v), numero_de_registro(nr), modelo(m), fabricante(f), ano_fabricacion(af), capacidad(c), peso_max_despege(pmd), aerolinea(a), estado(e) {}
@@ -15,4 +15,3 @@ void Aviones::mostrarInfo() const {
     std::cout << "Estado: " << estado << std::endl;
     std::cout << "---------------------------" << std::endl;
 }
-
