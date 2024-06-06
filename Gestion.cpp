@@ -18,6 +18,7 @@ using json = nlohmann::json;
 // Aca se crean las dos listas doblemente enlazadas:
 ListaCircularDoble listaAvionesDisponibles;
 ListaCircularDoble listaAvionesMantenimiento;
+ListaCircularDoble listaAvionesUnion;
 
 // Aca se cra la cola para los pasajeros:
 Cola colaPasajeros;
@@ -146,6 +147,7 @@ void cargarPasajeros() {
 
 void cargarMovimientos() {
     cout << "Cargando movimientos..." << endl;
+    bool validacion = false;
     // Codigo para cargar movimientos
     const char * filterPatterns[] = { "*.txt" };
     const char * filePath = tinyfd_openFileDialog(
@@ -191,7 +193,7 @@ void cargarMovimientos() {
 
         // Mostrar las instrucciones para verificar
         for (const std::string &instr : instrucciones) {
-            std::cout << "Instruccion: " << instr << std::endl;
+            //std::cout << "Instruccion: " << instr << std::endl;
             /*
             En esta parte se crea lo siguinete:
             cola: pasajeros
@@ -242,14 +244,15 @@ void cargarMovimientos() {
                     lista circular doble: mantenimiento
                     */ 
                     if (tipoMovimiento == "MantenimientoAviones") {
+                        validacion = true;
                         if (accion == "Ingreso") {
                             // Aca crear las de Ingreso
-                            std::cout << "Procesando MantenimientoAviones Ingreso para " << identificador << std::endl;
-
+                            //std::cout << "Procesando MantenimientoAviones Ingreso para " << identificador << std::endl;
+                            listaAvionesDisponibles.buscarYActualizar(identificador, "Mantenimiento");
                         } else if (accion == "Salida") {
                             // Aca crear las de Salida
-                            std::cout << "Procesando MantenimientoAviones Salida para " << identificador << std::endl;
-
+                            //std::cout << "Procesando MantenimientoAviones Salida para " << identificador << std::endl;
+                            listaAvionesMantenimiento.buscarYActualizar(identificador, "Disponible");
                         } else {
                             std::cerr << "Accion desconocida: " << accion << std::endl;
                         }
@@ -263,6 +266,31 @@ void cargarMovimientos() {
                 }
             }
         }
+        // Se verifica que se actuliza alguna instruccion de MantenimientoAviones
+        if (validacion){
+            //cout << "------------Inicio de la union----------"<< endl;
+            //Iniciamos crenado una lista con la union de las de manteniemiento y disponibles ya modificadas:
+            listaAvionesDisponibles.unirListas(listaAvionesMantenimiento, listaAvionesUnion);
+            //listaAvionesUnion.display();
+
+            //Vaciamos las listas de diponible y manteniemieto:
+            listaAvionesDisponibles.vaciar();
+            listaAvionesMantenimiento.vaciar();
+            //listaAvionesDisponibles.display();
+            //listaAvionesMantenimiento.display();
+
+            //Esto es para la reordenacion de las listas de diponibles y mantenimiento:
+            cout << "------------Inicio de la desunion----------"<< endl;
+            listaAvionesUnion.recorrer(listaAvionesDisponibles, listaAvionesMantenimiento);
+            //listaAvionesUnion.vaciar();
+            cout << "------------Fin 0----------"<< endl;
+
+            cout << "------------Inicio de la imprecion----------"<< endl;
+            listaAvionesDisponibles.display();
+            cout << "------------Fin 1----------"<< endl;
+            listaAvionesMantenimiento.display();
+            cout << "------------Fin 2----------"<< endl;
+        }
         //mostrar la pila
         //pilaEquipajes.printPila();
         //ListaEnlazadaDoblePasajeros.imprimirHaciaDelante();
@@ -274,6 +302,7 @@ void cargarMovimientos() {
         std::cout << "No se selecciono ningun archivo." << std::endl;
     }
 }
+
 
 int main() {
     int opcion;
@@ -300,7 +329,8 @@ int main() {
                 cargarMovimientos();
                 break;
             case 4:
-                cargarMovimientos();
+                cout << "Hola aqui**************" << endl;
+                listaAvionesUnion.display();
                 break;
             case 5:
                 cargarMovimientos();
