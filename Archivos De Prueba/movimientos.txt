@@ -1,3 +1,5 @@
 IngresoEquipajes;
 MantenimientoAviones, Ingreso, N12345;
+IngresoEquipajes;
 MantenimientoAviones, Salida, C13579;
+IngresoEquipajes;

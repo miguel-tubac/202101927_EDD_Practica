@@ -9,6 +9,8 @@ using namespace std;
 #include "clasesPropias/ListaCircularDoble.h"
 #include "clasesPropias/Pasajeros.h"
 #include "clasesPropias/Cola.h"
+#include "clasesPropias/Pila.h"
+#include "clasesPropias/ListaEnlazadaDoble.h"
 
 // Para simplificar, usaremos un alias para el tipo de datos JSON
 using json = nlohmann::json;
@@ -19,6 +21,12 @@ ListaCircularDoble listaAvionesMantenimiento;
 
 // Aca se cra la cola para los pasajeros:
 Cola colaPasajeros;
+
+// Aca se almacenaran la Pila de Equipaje:
+Pila pilaEquipajes;
+
+// Aca se almacenaran los pasajeros que salgan de la cola
+ListaEnlazadaDoble ListaEnlazadaDoblePasajeros;
 
 void cargarAviones() {
     cout << "Cargando aviones..." << endl;
@@ -33,7 +41,7 @@ void cargarAviones() {
     );
 
     if (filePath) {
-        std::cout << "Archivo seleccionado: " << filePath << std::endl;
+        //std::cout << "Archivo seleccionado: " << filePath << std::endl;
         // Aquí iría el código para manejar el archivo seleccionado
 
         // Leer el archivo JSON
@@ -51,12 +59,12 @@ void cargarAviones() {
         // Procesar los datos del JSON
         for (const auto& avion : aviones) {
             if(avion["estado"] == "Disponible"){
-                cout<< "Ingresando en aviones Disponibles"<< endl;
+                //cout<< "Ingresando en aviones Disponibles"<< endl;
                 Aviones* avion1 = new Aviones(avion["vuelo"], avion["numero_de_registro"], avion["modelo"], avion["fabricante"], avion["ano_fabricacion"], avion["capacidad"], avion["peso_max_despege"], avion["aerolinea"], avion["estado"]);
                 listaAvionesDisponibles.insert(avion1);
             }
             else if(avion["estado"] == "Mantenimiento"){
-                cout<< "Ingresando en aviones en Mantenimiento"<< endl;
+                //cout<< "Ingresando en aviones en Mantenimiento"<< endl;
                 Aviones* avion2 = new Aviones(avion["vuelo"], avion["numero_de_registro"], avion["modelo"], avion["fabricante"], avion["ano_fabricacion"], avion["capacidad"], avion["peso_max_despege"], avion["aerolinea"], avion["estado"]);
                 listaAvionesMantenimiento.insert(avion2);
             }
@@ -75,7 +83,7 @@ void cargarAviones() {
         }
         // Mostrar todos los aviones en la lista
         //listaAvionesDisponibles.display();
-        listaAvionesMantenimiento.display();
+        //listaAvionesMantenimiento.display();
     } else {
         std::cout << "No se selecciono ningun archivo." << std::endl;
     }
@@ -96,7 +104,7 @@ void cargarPasajeros() {
     );
 
     if (filePath) {
-        std::cout << "Archivo seleccionado: " << filePath << std::endl;
+        //std::cout << "Archivo seleccionado: " << filePath << std::endl;
         // Aquí iría el código para manejar el archivo seleccionado
 
         // Leer el archivo JSON
@@ -129,7 +137,7 @@ void cargarPasajeros() {
             
         }
         // Mostrar todos los pasajeros:
-        colaPasajeros.display();
+        //colaPasajeros.display();
         
     } else {
         std::cout << "No se selecciono ningun archivo." << std::endl;
@@ -138,7 +146,7 @@ void cargarPasajeros() {
 
 void cargarMovimientos() {
     cout << "Cargando movimientos..." << endl;
-    // Aquí iría el código para cargar movimientos
+    // Codigo para cargar movimientos
     const char * filterPatterns[] = { "*.txt" };
     const char * filePath = tinyfd_openFileDialog(
         "Seleccione un archivo TXT",  // Título de la ventana
@@ -150,8 +158,8 @@ void cargarMovimientos() {
     );
 
     if (filePath) {
-        std::cout << "Archivo seleccionado: " << filePath << std::endl;
-        // Aquí iría el código para manejar el archivo seleccionado
+        //std::cout << "Archivo seleccionado: " << filePath << std::endl;
+        // manejar el archivo seleccionado
 
         // Leer el archivo JSON
         std::ifstream file(filePath);
@@ -191,7 +199,20 @@ void cargarMovimientos() {
             pila: equipaje
             */ 
             if(instr == "IngresoEquipajes"){
-                std::cout << "Procesando IngresoEquipajes..." << std::endl;
+                //std::cout << "---------------Procesando IngresoEquipajes...----------------" << std::endl;
+                //Ingreso de equipaje a la Pila pilaEquipajes
+                // Desencolar y almacenar el pasajero
+                Pasajeros* desencolado = colaPasajeros.desencolar();
+                if (desencolado != nullptr) {
+                    // Mostrar la información del pasajero desencolado
+                    // Aca se comprueba si el equipaje es mayor a cero
+                    if (desencolado->equipaje_facturado > 0){
+                        //desencolado->mostrarInfo();
+                        pilaEquipajes.push(desencolado);
+                    }
+                    //Aca se agregan los pasajeros que salgan de la cola 
+                    ListaEnlazadaDoblePasajeros.agregar(desencolado);
+                }
             }
             else {
                 //Aca deben de ir las indtrucciones de: ManteniminetoAviones, Ingreso, N12345
@@ -242,6 +263,13 @@ void cargarMovimientos() {
                 }
             }
         }
+        //mostrar la pila
+        //pilaEquipajes.printPila();
+        //ListaEnlazadaDoblePasajeros.imprimirHaciaDelante();
+        ListaEnlazadaDoblePasajeros.ordenar();
+        //cout << "-------------------Lista ordenada:-------------" << endl;
+        //ListaEnlazadaDoblePasajeros.imprimirHaciaDelante();
+
     } else {
         std::cout << "No se selecciono ningun archivo." << std::endl;
     }
@@ -252,9 +280,9 @@ int main() {
 
     do {
         cout << "------------------------MENU-----------------------" << endl;
-        cout << "1. Carga de aviones" << endl;
-        cout << "2. Carga de pasajeros" << endl;
-        cout << "3. Carga de movimientos" << endl;
+        cout << "1. Carga de aviones" << endl;//Finalizado
+        cout << "2. Carga de pasajeros" << endl;//Finalizado
+        cout << "3. Carga de movimientos" << endl;//Faltan los movimintos de aviones
         cout << "4. Consultar pasajeros" << endl;
         cout << "5. Visualizar reporte" << endl;
         cout << "6. Salir" << endl;
