@@ -11,6 +11,7 @@ using namespace std;
 #include "clasesPropias/Cola.h"
 #include "clasesPropias/Pila.h"
 #include "clasesPropias/ListaEnlazadaDoble.h"
+#include "clasesPropias/NodoAviones.h"
 
 // Para simplificar, usaremos un alias para el tipo de datos JSON
 using json = nlohmann::json;
@@ -18,7 +19,6 @@ using json = nlohmann::json;
 // Aca se crean las dos listas doblemente enlazadas:
 ListaCircularDoble listaAvionesDisponibles;
 ListaCircularDoble listaAvionesMantenimiento;
-ListaCircularDoble listaAvionesUnion;
 
 // Aca se cra la cola para los pasajeros:
 Cola colaPasajeros;
@@ -244,15 +244,22 @@ void cargarMovimientos() {
                     lista circular doble: mantenimiento
                     */ 
                     if (tipoMovimiento == "MantenimientoAviones") {
-                        validacion = true;
+                        //validacion = true;
                         if (accion == "Ingreso") {
                             // Aca crear las de Ingreso
                             //std::cout << "Procesando MantenimientoAviones Ingreso para " << identificador << std::endl;
-                            listaAvionesDisponibles.buscarYActualizar(identificador, "Mantenimiento");
+                            NodoAviones* nodoIngreso = listaAvionesDisponibles.retornarNodo(identificador, "Mantenimiento");
+                            std::cout << "NumeroRegistro: " << nodoIngreso->data->numero_de_registro << std::endl;
+                            Aviones* avionIngreso = new Aviones(nodoIngreso->data->vuelo, nodoIngreso->data->numero_de_registro, nodoIngreso->data->modelo, nodoIngreso->data->fabricante, nodoIngreso->data->ano_fabricacion, nodoIngreso->data->capacidad, nodoIngreso->data->peso_max_despege, nodoIngreso->data->aerolinea, nodoIngreso->data->estado);
+                            listaAvionesMantenimiento.insert(avionIngreso);
+                            listaAvionesDisponibles.eliminarNodoAvion(identificador);
                         } else if (accion == "Salida") {
                             // Aca crear las de Salida
                             //std::cout << "Procesando MantenimientoAviones Salida para " << identificador << std::endl;
-                            listaAvionesMantenimiento.buscarYActualizar(identificador, "Disponible");
+                            NodoAviones* nodoSalida = listaAvionesMantenimiento.retornarNodo(identificador, "Disponible");
+                            Aviones* avionSalida = new Aviones(nodoSalida->data->vuelo, nodoSalida->data->numero_de_registro, nodoSalida->data->modelo, nodoSalida->data->fabricante, nodoSalida->data->ano_fabricacion, nodoSalida->data->capacidad, nodoSalida->data->peso_max_despege, nodoSalida->data->aerolinea, nodoSalida->data->estado);
+                            listaAvionesMantenimiento.eliminarNodoAvion(identificador);
+                            listaAvionesDisponibles.insert(avionSalida);
                         } else {
                             std::cerr << "Accion desconocida: " << accion << std::endl;
                         }
@@ -266,37 +273,20 @@ void cargarMovimientos() {
                 }
             }
         }
-        // Se verifica que se actuliza alguna instruccion de MantenimientoAviones
-        if (validacion){
-            //cout << "------------Inicio de la union----------"<< endl;
-            //Iniciamos crenado una lista con la union de las de manteniemiento y disponibles ya modificadas:
-            listaAvionesDisponibles.unirListas(listaAvionesMantenimiento, listaAvionesUnion);
-            //listaAvionesUnion.display();
 
-            //Vaciamos las listas de diponible y manteniemieto:
-            listaAvionesDisponibles.vaciar();
-            listaAvionesMantenimiento.vaciar();
-            //listaAvionesDisponibles.display();
-            //listaAvionesMantenimiento.display();
-
-            //Esto es para la reordenacion de las listas de diponibles y mantenimiento:
-            cout << "------------Inicio de la desunion----------"<< endl;
-            listaAvionesUnion.recorrer(listaAvionesDisponibles, listaAvionesMantenimiento);
-            //listaAvionesUnion.vaciar();
-            cout << "------------Fin 0----------"<< endl;
-
-            cout << "------------Inicio de la imprecion----------"<< endl;
-            listaAvionesDisponibles.display();
-            cout << "------------Fin 1----------"<< endl;
-            listaAvionesMantenimiento.display();
-            cout << "------------Fin 2----------"<< endl;
-        }
         //mostrar la pila
         //pilaEquipajes.printPila();
         //ListaEnlazadaDoblePasajeros.imprimirHaciaDelante();
         ListaEnlazadaDoblePasajeros.ordenar();
         //cout << "-------------------Lista ordenada:-------------" << endl;
         //ListaEnlazadaDoblePasajeros.imprimirHaciaDelante();
+
+
+        // Mostrar todos los aviones en la lista
+        //cout << "-------------------Lista de Aviones actualizada:-------------" << endl;
+        //listaAvionesDisponibles.display();
+        //listaAvionesMantenimiento.display();
+
 
     } else {
         std::cout << "No se selecciono ningun archivo." << std::endl;
@@ -330,7 +320,6 @@ int main() {
                 break;
             case 4:
                 cout << "Hola aqui**************" << endl;
-                listaAvionesUnion.display();
                 break;
             case 5:
                 cargarMovimientos();
