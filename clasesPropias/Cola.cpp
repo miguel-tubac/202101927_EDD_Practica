@@ -1,7 +1,7 @@
 #include "Cola.h"
 #include <iostream>
 
-Cola::Cola() : front(nullptr), rear(nullptr) {}
+Cola::Cola() : frente(nullptr), ultimo(nullptr) {}
 
 Cola::~Cola() {
     while (!isEmpty()) {
@@ -13,11 +13,11 @@ Cola::~Cola() {
 // Aca se agregan objetos de tipo pasajero a la cola
 void Cola::encolar(Pasajeros* pasajero) {
     Node* newNode = new Node(pasajero);
-    if (rear == nullptr) {
-        front = rear = newNode;
+    if (ultimo == nullptr) {
+        frente = ultimo = newNode;
     } else {
-        rear->next = newNode;
-        rear = newNode;
+        ultimo->next = newNode;
+        ultimo = newNode;
     }
 }
 
@@ -25,13 +25,13 @@ void Cola::encolar(Pasajeros* pasajero) {
 // Aca se quitan pasajeros de la cola, es decir (first-in, first-out, primero en entrar, primero en salir).
 Pasajeros* Cola::desencolar() {
     if (isEmpty()) {
-        std::cerr << "La cola está vacía." << std::endl;
+        std::cerr << "La cola esta vacia." << std::endl;
         return nullptr;
     }
-    Node* temp = front;
-    front = front->next;
-    if (front == nullptr) {
-        rear = nullptr;
+    Node* temp = frente;
+    frente = frente->next;
+    if (frente == nullptr) {
+        ultimo = nullptr;
     }
     Pasajeros* pasajero = temp->data;
     delete temp;
@@ -41,7 +41,7 @@ Pasajeros* Cola::desencolar() {
 
 // Se comprueba si la cola esta vasilla
 bool Cola::isEmpty() const {
-    return front == nullptr;
+    return frente == nullptr;
 }
 
 
@@ -51,7 +51,7 @@ void Cola::display() const {
         std::cout << "La cola está vacía." << std::endl;
         return;
     }
-    Node* current = front;
+    Node* current = frente;
     while (current != nullptr) {
         current->data->mostrarInfo();
         current = current->next;

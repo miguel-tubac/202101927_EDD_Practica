@@ -13,10 +13,10 @@ public:
 
 class Pila {
 private:
-    Node2* top;
+    Node2* arriba;
 
 public:
-    Pila() : top(nullptr) {}
+    Pila() : arriba(nullptr) {}
     ~Pila();
 
     void push(Pasajeros* data);

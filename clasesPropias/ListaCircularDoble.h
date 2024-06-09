@@ -6,7 +6,7 @@
 
 class ListaCircularDoble {
 private:
-    NodoAviones* head;
+    NodoAviones* inicio;
 
 public:
     ListaCircularDoble();
@@ -17,4 +17,4 @@ public:
     void eliminarNodoAvion(std::string registro);
 };
 
-#endif // CIRCULAR_DOUBLY_LINKED_LIST_HPP
+#endif // CIRCULAR_DOUBLY_LINKED_LIST_H

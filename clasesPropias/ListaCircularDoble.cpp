@@ -1,59 +1,59 @@
 #include "ListaCircularDoble.h"
 #include <iostream>
 
-ListaCircularDoble::ListaCircularDoble() : head(nullptr) {}
+ListaCircularDoble::ListaCircularDoble() : inicio(nullptr) {}
 
 // Definición del constructor de Nodo fuera de la declaración de la clase
 NodoAviones::NodoAviones(Aviones* a) : data(a), next(nullptr), prev(nullptr) {}
 
 ListaCircularDoble::~ListaCircularDoble() {
-    if (head == nullptr) return;
-    NodoAviones* current = head;
+    if (inicio == nullptr) return;
+    NodoAviones* actual = inicio;
     do {
-        NodoAviones* nextNode = current->next;
-        delete current->data;
-        delete current;
-        current = nextNode;
-    } while (current != head);
+        NodoAviones* nextNode = actual->next;
+        delete actual->data;
+        delete actual;
+        actual = nextNode;
+    } while (actual != inicio);
 }
 
 
 void ListaCircularDoble::insert(Aviones* avion) {
     NodoAviones* newNode = new NodoAviones(avion);
-    if (head == nullptr) {
-        head = newNode;
-        head->next = head;
-        head->prev = head;
+    if (inicio == nullptr) {
+        inicio = newNode;
+        inicio->next = inicio;
+        inicio->prev = inicio;
     } else {
-        NodoAviones* tail = head->prev;
-        tail->next = newNode;
-        newNode->prev = tail;
-        newNode->next = head;
-        head->prev = newNode;
+        NodoAviones* cola = inicio->prev;
+        cola->next = newNode;
+        newNode->prev = cola;
+        newNode->next = inicio;
+        inicio->prev = newNode;
     }
 }
 
 void ListaCircularDoble::display() const {
-    if (head == nullptr) {
+    if (inicio == nullptr) {
         std::cout << "La lista esta vacia." << std::endl;
         return;
     }
-    NodoAviones* current = head;
+    NodoAviones* actual = inicio;
     do {
-        current->data->mostrarInfo();
-        current = current->next;
-    } while (current != head);
+        actual->data->mostrarInfo();
+        actual = actual->next;
+    } while (actual != inicio);
 }
 
 
 
 NodoAviones* ListaCircularDoble::retornarNodo(std::string registro, std::string estado) {
-    if (head == nullptr) {
+    if (inicio == nullptr) {
         std::cout << "La lista esta vacia." << std::endl;
         return nullptr;
     }
 
-    NodoAviones* actual = head;
+    NodoAviones* actual = inicio;
     NodoAviones* nodoTemporal = nullptr;
     do {
         //std::cout << "Revisando nodo con registro: " << actual->data->numero_de_registro << std::endl;
@@ -65,7 +65,7 @@ NodoAviones* ListaCircularDoble::retornarNodo(std::string registro, std::string 
             return nodoTemporal;
         }
         actual = actual->next;
-    } while (actual != head);
+    } while (actual != inicio);
 
     std::cout << "No se encontro el numero de registro Ingresado." << std::endl;
     return nullptr;
@@ -74,12 +74,12 @@ NodoAviones* ListaCircularDoble::retornarNodo(std::string registro, std::string 
 
 // Método para eliminar un nodo por valor
 void ListaCircularDoble::eliminarNodoAvion(std::string registro) {
-    if (head == nullptr) {
+    if (inicio == nullptr) {
         std::cout << "La lista esta vacia." << std::endl;
         return;
     }
     
-    NodoAviones* actual = head;
+    NodoAviones* actual = inicio;
     //NodoAviones* nodoAEliminar = nullptr;
     //std::cout << "inicio del eliminarNodoAvion." << std::endl;
     // Busca el nodo que contiene el valor
@@ -93,12 +93,12 @@ void ListaCircularDoble::eliminarNodoAvion(std::string registro) {
                 actual->next->prev = actual->prev;
                 //std::cout << "Reorganizando punteros, mas de un nodo en la lista." << std::endl;
 
-                if (actual == head) { // Si el nodo a eliminar es el head
-                    head = actual->next;
+                if (actual == inicio) { // Si el nodo a eliminar es el head
+                    inicio = actual->next;
                     //std::cout << "El nodo eliminado es el head. Nuevo head: " << head->data->numero_de_registro << std::endl;
                 }
             } else { // Único nodo en la lista
-                head = nullptr;
+                inicio = nullptr;
                 //std::cout << "Eliminando el unico nodo en la lista." << std::endl;
             }
 
@@ -109,8 +109,7 @@ void ListaCircularDoble::eliminarNodoAvion(std::string registro) {
             return;
         }
         actual = actual->next;
-    } while (actual != head);
+    } while (actual != inicio);
 
-    // Si no se encontró el nodo, no hacer nada
-    std::cout << "No se encontro el nodo con el registro: " << registro << std::endl;
+    // Si no se encontró el nodo, no hacer nadinicio
 }

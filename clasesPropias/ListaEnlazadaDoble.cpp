@@ -1,10 +1,10 @@
 #include "ListaEnlazadaDoble.h"
 #include <iostream>
 
-ListaEnlazadaDoble::ListaEnlazadaDoble() : head(nullptr), tail(nullptr) {}
+ListaEnlazadaDoble::ListaEnlazadaDoble() : inicio(nullptr), fin(nullptr) {}
 
 ListaEnlazadaDoble::~ListaEnlazadaDoble() {
-    Node3* current = head;
+    Node3* current = inicio;
     Node3* nextNode;
     while (current != nullptr) {
         nextNode = current->next;
@@ -16,19 +16,19 @@ ListaEnlazadaDoble::~ListaEnlazadaDoble() {
 
 void ListaEnlazadaDoble::agregar(Pasajeros* pasajero) {
     Node3* newNode = new Node3(pasajero);
-    if (tail == nullptr) {
-        head = tail = newNode;
+    if (fin == nullptr) {
+        inicio = fin = newNode;
     } else {
-        tail->next = newNode;
-        newNode->prev = tail;
-        tail = newNode;
+        fin->next = newNode;
+        newNode->prev = fin;
+        fin = newNode;
     }
 }
 
 
 
 void ListaEnlazadaDoble::buscarPasaporte(std::string numPasaporte){
-    Node3* actual = head;
+    Node3* actual = inicio;
     while (actual != nullptr) {
         if (actual->data->numero_de_pasaporte == numPasaporte){
             actual->data->mostrarInfo();
@@ -42,7 +42,7 @@ void ListaEnlazadaDoble::buscarPasaporte(std::string numPasaporte){
 
 /*
 void ListaEnlazadaDoble::imprimirHaciaDelante() const {
-    Node3* current = head;
+    Node3* current = inicio;
     while (current != nullptr) {
         current->data->mostrarInfo();
         current = current->next;
@@ -52,14 +52,14 @@ void ListaEnlazadaDoble::imprimirHaciaDelante() const {
 
 
 bool ListaEnlazadaDoble::isEmpty() const {
-    return head == nullptr;
+    return inicio == nullptr;
 }
 
 //Los ordena de manera sendente a los objetos Pasajeros:
 void ListaEnlazadaDoble::ordenar() {
-    if (isEmpty() || head->next == nullptr) return; // No hay necesidad de ordenar si la lista está vacía o solo tiene un elemento
+    if (isEmpty() || inicio->next == nullptr) return; // No hay necesidad de ordenar si la lista está vacía o solo tiene un elemento
 
-    Node3* actual = head->next; // Comenzamos desde el segundo nodo
+    Node3* actual = inicio->next; // Comenzamos desde el segundo nodo
     while (actual != nullptr) {
         Node3* anterior2 = actual->prev;
         Pasajeros* key = actual->data;
@@ -69,7 +69,7 @@ void ListaEnlazadaDoble::ordenar() {
             anterior2 = anterior2->prev;
         }
         if (anterior2 == nullptr) {
-            head->data = key;
+            inicio->data = key;
         } else {
             anterior2->next->data = key;
         }

@@ -13,8 +13,8 @@ public:
 
 class Cola {
 private:
-    Node* front;
-    Node* rear;
+    Node* frente;
+    Node* ultimo;
 
 public:
     Cola();

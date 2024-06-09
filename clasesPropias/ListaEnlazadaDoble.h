@@ -13,8 +13,8 @@ public:
 
 class ListaEnlazadaDoble {
 private:
-    Node3* head;
-    Node3* tail;
+    Node3* inicio;
+    Node3* fin;
 
 public:
     ListaEnlazadaDoble();
