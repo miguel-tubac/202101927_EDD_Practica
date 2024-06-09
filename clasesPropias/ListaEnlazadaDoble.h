@@ -24,6 +24,7 @@ public:
     bool isEmpty() const;
     void ordenar();
     int comparar(Pasajeros* p1, Pasajeros* p2) const;
+    void buscarPasaporte(std::string numPasaporte);
 };
 
 #endif // LISTAENLAZADADOBLE_H

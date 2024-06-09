@@ -27,6 +27,20 @@ void ListaEnlazadaDoble::agregar(Pasajeros* pasajero) {
 
 
 
+void ListaEnlazadaDoble::buscarPasaporte(std::string numPasaporte){
+    Node3* actual = head;
+    while (actual != nullptr) {
+        if (actual->data->numero_de_pasaporte == numPasaporte){
+            actual->data->mostrarInfo();
+            return;
+        }
+        actual = actual->next;
+    }
+    std::cout << "No se encontro el Pasajero con el numero de Pasaporte: "<< numPasaporte << std::endl;
+}
+
+
+/*
 void ListaEnlazadaDoble::imprimirHaciaDelante() const {
     Node3* current = head;
     while (current != nullptr) {
@@ -34,6 +48,7 @@ void ListaEnlazadaDoble::imprimirHaciaDelante() const {
         current = current->next;
     }
 }
+*/
 
 
 bool ListaEnlazadaDoble::isEmpty() const {
@@ -69,5 +84,5 @@ int ListaEnlazadaDoble::comparar(Pasajeros* p1, Pasajeros* p2) const {
     if (compareVuelo != 0) return compareVuelo;
 
     // Si los numeros de vuelo son iguales, comparar por numero de asiento
-    return p1->asiento.compare(p2->asiento);
+    return p1->asiento - p2->asiento;
 }

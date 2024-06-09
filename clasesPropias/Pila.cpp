@@ -30,7 +30,7 @@ Pasajeros* Pila::pop() {
 // Función para obtener el elemento superior de la pila sin quitarlo
 Pasajeros* Pila::recorrer() const {
     if (isEmpty()) {
-        std::cerr << "Error: Intento de recorrer en una pila vacía." << std::endl;
+        std::cerr << "Error: Intento de recorrer en una pila vacia." << std::endl;
         exit(EXIT_FAILURE); // Salir del programa debido al error
     }
     return top->data;

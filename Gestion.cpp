@@ -61,12 +61,12 @@ void cargarAviones() {
         for (const auto& avion : aviones) {
             if(avion["estado"] == "Disponible"){
                 //cout<< "Ingresando en aviones Disponibles"<< endl;
-                Aviones* avion1 = new Aviones(avion["vuelo"], avion["numero_de_registro"], avion["modelo"], avion["fabricante"], avion["ano_fabricacion"], avion["capacidad"], avion["peso_max_despege"], avion["aerolinea"], avion["estado"]);
+                Aviones* avion1 = new Aviones(avion["vuelo"], avion["numero_de_registro"], avion["modelo"], avion["fabricante"], avion["ano_fabricacion"], avion["capacidad"], avion["peso_max_despegue"], avion["aerolinea"], avion["estado"]);
                 listaAvionesDisponibles.insert(avion1);
             }
             else if(avion["estado"] == "Mantenimiento"){
                 //cout<< "Ingresando en aviones en Mantenimiento"<< endl;
-                Aviones* avion2 = new Aviones(avion["vuelo"], avion["numero_de_registro"], avion["modelo"], avion["fabricante"], avion["ano_fabricacion"], avion["capacidad"], avion["peso_max_despege"], avion["aerolinea"], avion["estado"]);
+                Aviones* avion2 = new Aviones(avion["vuelo"], avion["numero_de_registro"], avion["modelo"], avion["fabricante"], avion["ano_fabricacion"], avion["capacidad"], avion["peso_max_despegue"], avion["aerolinea"], avion["estado"]);
                 listaAvionesMantenimiento.insert(avion2);
             }
             /*
@@ -85,13 +85,17 @@ void cargarAviones() {
         // Mostrar todos los aviones en la lista
         //listaAvionesDisponibles.display();
         //listaAvionesMantenimiento.display();
+        cout << "Se Cargaron los Aviones correctamente. Press Enter..." << endl;
+        // Para detenerse hasta que se presione Enter
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');  // Ignorar cualquier entrada previa
+        cin.get();  // Esperar hasta que se presione Enter
     } else {
         std::cout << "No se selecciono ningun archivo." << std::endl;
     }
 }
 
 void cargarPasajeros() {
-    cout << "Cargando pasajeros..." << endl;
+    cout << "Cargando Pasajeros..." << endl;
     // Aquí iría el código para cargar pasajeros
 
     const char * filterPatterns[] = { "*.json" };
@@ -139,14 +143,17 @@ void cargarPasajeros() {
         }
         // Mostrar todos los pasajeros:
         //colaPasajeros.display();
-        
+        cout << "Se Cargaron los Pasajeros correctamente. Press Enter..." << endl;
+        // Para detenerse hasta que se presione Enter
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');  // Ignorar cualquier entrada previa
+        cin.get();  // Esperar hasta que se presione Enter
     } else {
         std::cout << "No se selecciono ningun archivo." << std::endl;
     }
 }
 
 void cargarMovimientos() {
-    cout << "Cargando movimientos..." << endl;
+    cout << "Cargando Movimientos..." << endl;
     bool validacion = false;
     // Codigo para cargar movimientos
     const char * filterPatterns[] = { "*.txt" };
@@ -247,15 +254,14 @@ void cargarMovimientos() {
                         //validacion = true;
                         if (accion == "Ingreso") {
                             // Aca crear las de Ingreso
-                            //std::cout << "Procesando MantenimientoAviones Ingreso para " << identificador << std::endl;
+                            std::cout << "Procesando MantenimientoAviones Ingreso para " << identificador << std::endl;
                             NodoAviones* nodoIngreso = listaAvionesDisponibles.retornarNodo(identificador, "Mantenimiento");
-                            std::cout << "NumeroRegistro: " << nodoIngreso->data->numero_de_registro << std::endl;
                             Aviones* avionIngreso = new Aviones(nodoIngreso->data->vuelo, nodoIngreso->data->numero_de_registro, nodoIngreso->data->modelo, nodoIngreso->data->fabricante, nodoIngreso->data->ano_fabricacion, nodoIngreso->data->capacidad, nodoIngreso->data->peso_max_despege, nodoIngreso->data->aerolinea, nodoIngreso->data->estado);
                             listaAvionesMantenimiento.insert(avionIngreso);
                             listaAvionesDisponibles.eliminarNodoAvion(identificador);
                         } else if (accion == "Salida") {
                             // Aca crear las de Salida
-                            //std::cout << "Procesando MantenimientoAviones Salida para " << identificador << std::endl;
+                            std::cout << "Procesando MantenimientoAviones Salida para " << identificador << std::endl;
                             NodoAviones* nodoSalida = listaAvionesMantenimiento.retornarNodo(identificador, "Disponible");
                             Aviones* avionSalida = new Aviones(nodoSalida->data->vuelo, nodoSalida->data->numero_de_registro, nodoSalida->data->modelo, nodoSalida->data->fabricante, nodoSalida->data->ano_fabricacion, nodoSalida->data->capacidad, nodoSalida->data->peso_max_despege, nodoSalida->data->aerolinea, nodoSalida->data->estado);
                             listaAvionesMantenimiento.eliminarNodoAvion(identificador);
@@ -282,21 +288,45 @@ void cargarMovimientos() {
         //ListaEnlazadaDoblePasajeros.imprimirHaciaDelante();
 
 
-        // Mostrar todos los aviones en la lista
+        // Mostrar todos los aviones en la lista ya ordenados segun el archivo de movimimientos
         //cout << "-------------------Lista de Aviones actualizada:-------------" << endl;
         //listaAvionesDisponibles.display();
         //listaAvionesMantenimiento.display();
-
-
+        cout << "Se Cargaron los Movimientos correctamente. Press Enter..." << endl;
+        // Para detenerse hasta que se presione Enter
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');  // Ignorar cualquier entrada previa
+        cin.get();  // Esperar hasta que se presione Enter
     } else {
         std::cout << "No se selecciono ningun archivo." << std::endl;
     }
 }
 
 
+void buscarPasajero(std::string numPasaporte){
+    cout << "Cargando Informacion del Pasajero..." << endl;
+    //Aca se realiza la busqueda y posteriormente se imprime en consola
+    ListaEnlazadaDoblePasajeros.buscarPasaporte(numPasaporte);
+
+    cout << "Se Cargaro el Pasajero correctamente. Press Enter..." << endl;
+    // Para detenerse hasta que se presione Enter
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');  // Ignorar cualquier entrada previa
+    cin.get();  // Esperar hasta que se presione Enter
+}
+
+void generarGrafias(){
+    cout << "Generando Grafias..." << endl;
+    //Aca se realiza la busqueda y posteriormente se imprime en consola
+    //ListaEnlazadaDoblePasajeros.buscarPasaporte(numPasaporte);
+
+    cout << "Se Generaron las Grafias correctamente. Press Enter..." << endl;
+    // Para detenerse hasta que se presione Enter
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');  // Ignorar cualquier entrada previa
+    cin.get();  // Esperar hasta que se presione Enter
+}
+
 int main() {
     int opcion;
-
+    std::string pasaporte;
     do {
         cout << "------------------------MENU-----------------------" << endl;
         cout << "1. Carga de aviones" << endl;//Finalizado
@@ -319,10 +349,12 @@ int main() {
                 cargarMovimientos();
                 break;
             case 4:
-                cout << "Hola aqui**************" << endl;
+                cout << "Ingrese el numero de pasaporte: " << endl;
+                cin >> pasaporte;
+                buscarPasajero(pasaporte);
                 break;
             case 5:
-                cargarMovimientos();
+                generarGrafias();
                 break;
             case 6:
                 cout << "Saliendo del programa..." << endl;
