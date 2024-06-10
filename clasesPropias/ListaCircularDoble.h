@@ -15,6 +15,8 @@ public:
     void display() const;
     NodoAviones* retornarNodo(std::string registro, std::string estado);
     void eliminarNodoAvion(std::string registro);
+    void graficar(std::string nombre);
 };
+
 
 #endif // CIRCULAR_DOUBLY_LINKED_LIST_H

@@ -1,0 +1,10 @@
+digraph G { randir = LR;
+label = "Lista_Circular_Doble_Mantenimiento";
+labelloc = "t";
+fontsize = 20;
+"Registro: C13579
+Estado: Mantenimiento"->"Registro: N24680
+Estado: Mantenimiento"->"Registro: C13579
+Estado: Mantenimiento"->"Registro: N24680
+Estado: Mantenimiento"->"Registro: C13579
+Estado: Mantenimiento" ; }

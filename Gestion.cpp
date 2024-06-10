@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <cstdlib>
 using namespace std;
 #include "importaciones/tinyfiledialogs.h" 
 #include "importaciones/json.hpp"
@@ -315,8 +316,10 @@ void buscarPasajero(std::string numPasaporte){
 
 void generarGrafias(){
     cout << "Generando Grafias..." << endl;
-    //Aca se realiza la busqueda y posteriormente se imprime en consola
-    //ListaEnlazadaDoblePasajeros.buscarPasaporte(numPasaporte);
+    listaAvionesDisponibles.graficar("Lista_Circular_Doble_Dispobibles");
+    listaAvionesMantenimiento.graficar("Lista_Circular_Doble_Mantenimiento");
+    colaPasajeros.graficar();
+    pilaEquipajes.graficar();
 
     cout << "Se Generaron las Grafias correctamente. Press Enter..." << endl;
     // Para detenerse hasta que se presione Enter

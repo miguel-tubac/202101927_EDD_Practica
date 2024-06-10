@@ -23,6 +23,7 @@ public:
     Pasajeros* desencolar();
     bool isEmpty() const;
     void display() const;
+    void graficar();
 };
 
 #endif // COLA_H

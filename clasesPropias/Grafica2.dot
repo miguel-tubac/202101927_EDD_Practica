@@ -1,0 +1,7 @@
+digraph G { randir = LR;
+label = "Cola De Pasajeros";
+labelloc = "t";
+fontsize = 20;
+"Pasaporte : P23456789
+ Nombre: Liu Wei"->"Pasaporte : P34567890
+ Nombre: Ahmed Al-Farsi" ; }

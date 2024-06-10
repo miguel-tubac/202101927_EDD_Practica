@@ -1,0 +1,7 @@
+digraph G { randir = LR;
+label = "Pila De Equipaje";
+labelloc = "t";
+fontsize = 20;
+"Pasaporte : P98765432
+ N° Equipaje: 1"->"Pasaporte : P12345678
+ N° Equipaje: 2" ; }

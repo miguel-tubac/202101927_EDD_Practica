@@ -24,6 +24,7 @@ public:
     Pasajeros* recorrer() const;
     bool isEmpty() const;
     void printPila() const;
+    void graficar();
 };
 
 #endif // PILA_H

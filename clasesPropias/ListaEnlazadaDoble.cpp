@@ -1,16 +1,21 @@
 #include "ListaEnlazadaDoble.h"
 #include <iostream>
 
+//Para generar el grafo, ya que es una cebezera para leer y escrbir archivos:
+#include <fstream>
+#include <cstdlib>//esta nos permite acceder al sistema y ejucar comandos como si fuera la consola
+using namespace std;
+
 ListaEnlazadaDoble::ListaEnlazadaDoble() : inicio(nullptr), fin(nullptr) {}
 
 ListaEnlazadaDoble::~ListaEnlazadaDoble() {
-    Node3* current = inicio;
+    Node3* actual = inicio;
     Node3* nextNode;
-    while (current != nullptr) {
-        nextNode = current->next;
-        delete current->data;
-        delete current;
-        current = nextNode;
+    while (actual != nullptr) {
+        nextNode = actual->next;
+        delete actual->data;
+        delete actual;
+        actual = nextNode;
     }
 }
 
@@ -40,17 +45,6 @@ void ListaEnlazadaDoble::buscarPasaporte(std::string numPasaporte){
 }
 
 
-/*
-void ListaEnlazadaDoble::imprimirHaciaDelante() const {
-    Node3* current = inicio;
-    while (current != nullptr) {
-        current->data->mostrarInfo();
-        current = current->next;
-    }
-}
-*/
-
-
 bool ListaEnlazadaDoble::isEmpty() const {
     return inicio == nullptr;
 }
@@ -63,7 +57,7 @@ void ListaEnlazadaDoble::ordenar() {
     while (actual != nullptr) {
         Node3* anterior2 = actual->prev;
         Pasajeros* key = actual->data;
-        // Insertar current en la lista ordenada por vuelo y asiento
+        // Insertar actual en la lista ordenada por vuelo y asiento
         while (anterior2 != nullptr && comparar(anterior2->data, key) > 0) {
             anterior2->next->data = anterior2->data;
             anterior2 = anterior2->prev;
@@ -85,4 +79,27 @@ int ListaEnlazadaDoble::comparar(Pasajeros* p1, Pasajeros* p2) const {
 
     // Si los numeros de vuelo son iguales, comparar por numero de asiento
     return p1->asiento - p2->asiento;
+}
+
+
+
+void ListaEnlazadaDoble::graficar(){
+    if (isEmpty()){
+        std::cout << "La Lista Enlazada Doble esta vacia." << std::endl;
+        return;
+    }
+
+    ofstream archivo;
+    archivo.open("clasesPropias/Grafica1.dot", ios::out);
+    //Ahora empezamos a concatenar los datos del ast
+    archivo << "digraph G { randir = LR;"<< endl;
+    archivo << "label = \"Lista Enlazada Doble\";" << std::endl; // Título de la gráfica
+    archivo << "labelloc = \"t\";" << std::endl; // Posición del título (t = top)
+    archivo << "fontsize = 20;" << std::endl; // Tamaño de la fuente del título
+    //Ahora aqui se agregaran los nodos:
+    Node3* actual = inicio;
+    while (actual != nullptr) {
+        actual->data->mostrarInfo();
+        actual = actual->next;
+    }
 }
