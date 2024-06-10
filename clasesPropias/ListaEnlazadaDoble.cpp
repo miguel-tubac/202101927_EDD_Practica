@@ -90,7 +90,7 @@ void ListaEnlazadaDoble::graficar(){
     }
 
     ofstream archivo;
-    archivo.open("clasesPropias/Grafica1.dot", ios::out);
+    archivo.open("clasesPropias/Grafica4.dot", ios::out);
     //Ahora empezamos a concatenar los datos del ast
     archivo << "digraph G { randir = LR;"<< endl;
     archivo << "label = \"Lista Enlazada Doble\";" << std::endl; // Título de la gráfica
@@ -98,8 +98,36 @@ void ListaEnlazadaDoble::graficar(){
     archivo << "fontsize = 20;" << std::endl; // Tamaño de la fuente del título
     //Ahora aqui se agregaran los nodos:
     Node3* actual = inicio;
+    Node3* repaldo = nullptr;
+    std::string concatenado = "";
     while (actual != nullptr) {
-        actual->data->mostrarInfo();
+        concatenado = "\"Pasaporte: "+actual->data->numero_de_pasaporte +"\nNombre: "+ actual->data->nombre+"\nVuelo: "+actual->data->vuelo+"\nN° Asiento: "+std::to_string(actual->data->asiento)+"\"";
+        archivo << concatenado;
         actual = actual->next;
+        //Esto es para el ultimo nodo
+        if (actual != nullptr){
+            archivo << "->";
+        }
+
     }
+    actual = fin;
+    //cout << "Vuelo: " <<actual->data->vuelo <<endl;
+    while (actual != nullptr) {
+        concatenado = "\"Pasaporte: "+actual->data->numero_de_pasaporte +"\nNombre: "+ actual->data->nombre+"\nVuelo: "+actual->data->vuelo+"\nN° Asiento: "+std::to_string(actual->data->asiento)+"\"";
+        archivo << concatenado;
+        actual = actual->prev;
+        //Esto es para el ultimo nodo
+        if (actual != nullptr){
+            archivo << "->";
+        }
+    }
+    //cout << "Fin segundo bucle"<<endl;
+    //Aca se cierra el archivo .dot
+    archivo << " ; }";//este es el fin del archivo
+    archivo.close();
+
+    //Aca se compila el archivo:
+    system("dot -Tpng clasesPropias/Grafica4.dot -o Enlazada_Doble.png");
+    //Aca para mostrarlo desde el sistema es decir que lo abra el explorador de imagenes
+    system("start mspaint Enlazada_Doble.png");
 }

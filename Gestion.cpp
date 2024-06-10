@@ -316,10 +316,11 @@ void buscarPasajero(std::string numPasaporte){
 
 void generarGrafias(){
     cout << "Generando Grafias..." << endl;
-    listaAvionesDisponibles.graficar("Lista_Circular_Doble_Dispobibles");
-    listaAvionesMantenimiento.graficar("Lista_Circular_Doble_Mantenimiento");
+    listaAvionesDisponibles.graficar("Circular_Doble_Dispobibles");
+    listaAvionesMantenimiento.graficar("Circular_Doble_Mantenimiento");
     colaPasajeros.graficar();
     pilaEquipajes.graficar();
+    ListaEnlazadaDoblePasajeros.graficar();
 
     cout << "Se Generaron las Grafias correctamente. Press Enter..." << endl;
     // Para detenerse hasta que se presione Enter
