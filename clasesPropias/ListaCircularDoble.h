@@ -16,6 +16,7 @@ public:
     NodoAviones* retornarNodo(std::string registro, std::string estado);
     void eliminarNodoAvion(std::string registro);
     void graficar(std::string nombre);
+    void vaciar();
 };
 
 

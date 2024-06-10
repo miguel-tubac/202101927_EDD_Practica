@@ -30,6 +30,20 @@ void ListaEnlazadaDoble::agregar(Pasajeros* pasajero) {
     }
 }
 
+void ListaEnlazadaDoble::vaciar() {
+    if (isEmpty()) return;
+
+    Node3* actual = inicio;
+    Node3* nextNode;
+    while (actual != nullptr) {
+        nextNode = actual->next;
+        delete actual->data;
+        delete actual;
+        actual = nextNode;
+    }
+    inicio = nullptr;
+    fin = nullptr;
+}
 
 
 void ListaEnlazadaDoble::buscarPasaporte(std::string numPasaporte){

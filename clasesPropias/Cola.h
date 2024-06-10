@@ -24,6 +24,7 @@ public:
     bool isEmpty() const;
     void display() const;
     void graficar();
+    void vaciar();
 };
 
 #endif // COLA_H

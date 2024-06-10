@@ -51,6 +51,18 @@ void ListaCircularDoble::display() const {
     } while (actual != inicio);
 }
 
+void ListaCircularDoble::vaciar() {
+    if (inicio == nullptr) return;
+    NodoAviones* actual = inicio;
+    do {
+        NodoAviones* nextNode = actual->next;
+        delete actual->data;
+        delete actual;
+        actual = nextNode;
+    } while (actual != inicio);
+    inicio = nullptr;
+}
+
 
 void ListaCircularDoble::graficar(std::string nombre){
     if (inicio == nullptr) {

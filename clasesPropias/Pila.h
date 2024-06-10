@@ -25,6 +25,7 @@ public:
     bool isEmpty() const;
     void printPila() const;
     void graficar();
+    void vaciar();
 };
 
 #endif // PILA_H

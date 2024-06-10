@@ -56,6 +56,13 @@ void Pila::printPila() const {
 }
 
 
+void Pila::vaciar() {
+    while (!isEmpty()) {
+        pop();
+    }
+}
+
+
 void Pila::graficar(){
     if (isEmpty()) {
         std::cerr << "La Pila de Equpaje se encuantra vacia." << std::endl;

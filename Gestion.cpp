@@ -57,7 +57,8 @@ void cargarAviones() {
         json aviones;
         file >> aviones;
 
-
+        listaAvionesDisponibles.vaciar();
+        listaAvionesMantenimiento.vaciar();
         // Procesar los datos del JSON
         for (const auto& avion : aviones) {
             if(avion["estado"] == "Disponible"){
@@ -124,7 +125,7 @@ void cargarPasajeros() {
         json pasajeros;
         file >> pasajeros;
 
-
+        colaPasajeros.vaciar();
         // Procesar los datos del JSON
         for (const auto& pasajero : pasajeros) {
             Pasajeros* nuevoPasajero = new Pasajeros(pasajero["nombre"], pasajero["nacionalidad"], pasajero["numero_de_pasaporte"], pasajero["vuelo"], pasajero["asiento"], pasajero["destino"], pasajero["origen"], pasajero["equipaje_facturado"]);
@@ -199,6 +200,8 @@ void cargarMovimientos() {
             }
         }
 
+        pilaEquipajes.vaciar();
+        ListaEnlazadaDoblePasajeros.vaciar();
         // Mostrar las instrucciones para verificar
         for (const std::string &instr : instrucciones) {
             //std::cout << "Instruccion: " << instr << std::endl;
@@ -328,6 +331,21 @@ void generarGrafias(){
     cin.get();  // Esperar hasta que se presione Enter
 }
 
+
+void vaciarTodasLasListas(){
+    cout << "Vaciando las Listas..." << endl;
+    listaAvionesDisponibles.vaciar();;
+    listaAvionesMantenimiento.vaciar();
+    colaPasajeros.vaciar();
+    pilaEquipajes.vaciar();
+    ListaEnlazadaDoblePasajeros.vaciar();
+    cout << "Se Vaciaron las Listas correctamente. Press Enter..." << endl;
+    // Para detenerse hasta que se presione Enter
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');  // Ignorar cualquier entrada previa
+    cin.get();  // Esperar hasta que se presione Enter
+}
+
+
 int main() {
     int opcion;
     std::string pasaporte;
@@ -338,7 +356,8 @@ int main() {
         cout << "3. Carga de movimientos" << endl;//Faltan los movimintos de aviones
         cout << "4. Consultar pasajeros" << endl;
         cout << "5. Visualizar reporte" << endl;
-        cout << "6. Salir" << endl;
+        cout << "6. Reiniciar Listas" << endl;
+        cout << "7. Salir" << endl;
         cout << "Ingrese una opcion: ";
         cin >> opcion;
 
@@ -361,6 +380,9 @@ int main() {
                 generarGrafias();
                 break;
             case 6:
+                vaciarTodasLasListas();
+                break;
+            case 7:
                 cout << "Saliendo del programa..." << endl;
                 break;
             default:
@@ -368,7 +390,7 @@ int main() {
         }
 
         cout << endl;
-    } while(opcion != 6);
+    } while(opcion != 7);
 
     return 0;
 }

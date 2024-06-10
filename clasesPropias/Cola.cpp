@@ -64,6 +64,12 @@ void Cola::display() const {
 }
 
 
+void Cola::vaciar() {
+    while (!isEmpty()) {
+        desencolar();
+    }
+}
+
 
 void Cola::graficar() {
     if (isEmpty()) {

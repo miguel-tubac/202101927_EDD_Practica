@@ -25,6 +25,7 @@ public:
     int comparar(Pasajeros* p1, Pasajeros* p2) const;
     void buscarPasaporte(std::string numPasaporte);
     void graficar();
+    void vaciar();
 };
 
 #endif // LISTAENLAZADADOBLE_H
